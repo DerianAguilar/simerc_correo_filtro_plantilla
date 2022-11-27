@@ -6,7 +6,6 @@ import com.mycompany.simercandetc.Vista.VistaNotas;
 import java.time.LocalDate;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 
 public class ControladorVistaNota {
 
@@ -15,6 +14,7 @@ public class ControladorVistaNota {
     private NotaDao nDao;
 
     private String idU;
+    private int id;
 
     public ControladorVistaNota() {
         this.vN = new VistaNotas();
@@ -27,12 +27,14 @@ public class ControladorVistaNota {
         vN.setVisible(true);
         vN.setLocationRelativeTo(null);
         vN.idU.setText(id);
-        descripcion();
+        vN.btnSig.setVisible(false);
+        vN.btnAtras.setVisible(false);
+        desc();
 
     }
 
     public void guardar(String ttl, String desc, String fecha, int id) {
-        
+
         nota.setTitulo(ttl);
         nota.setDescripcion(desc);
         nota.setFecha(fecha);
@@ -45,8 +47,8 @@ public class ControladorVistaNota {
             JOptionPane.showMessageDialog(null, "NO SE GUARDO EL RECORDATORIO");
             limpiar();
         }
-        vN.jtTitulo.setText("");
-        vN.jtDescripcion.setText("");
+        //vN.jtTitulo.setText("");
+        //vN.jtDescripcion.setText("");
 
     }
 
@@ -55,23 +57,27 @@ public class ControladorVistaNota {
         vN.jtDescripcion.setText("");
     }
 
-    public void descripcion() {
-
+    public void desc() {
         int id = Integer.parseInt(vN.idU.getText());
-        String titulo ="";
-         String desc="";
-        
+        String titulo = "";
+        String desc = "";
+        //NotaDao nDao= new NotaDao();
         LocalDate fecha = LocalDate.now();
-        System.out.println(fecha);
+
         String fech = String.valueOf(fecha);
         List<Nota> lista = nDao.recordatorio(id, fech);
         for (int i = 0; i < lista.size(); i++) {
-            titulo = lista.get(i).getTitulo();
-            desc = lista.get(i).getDescripcion();
+            titulo = lista.get(0).getTitulo();
+            desc = lista.get(0).getDescripcion();
         }
+
         vN.txtTitulo.setText(titulo);
         vN.txtDesc.setText(desc);
-
+        if (lista.size() != 0) {
+            vN.btnSig.setVisible(true);
+        } else {
+            vN.btnSig.setVisible(false);
+        }
     }
 
 }

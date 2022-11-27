@@ -5,6 +5,10 @@
 package com.mycompany.simercandetc.Vista;
 
 import com.mycompany.simercandetc.Controlador.ControladorVistaNota;
+import com.mycompany.simercandetc.Dao.NotaDao;
+import com.mycompany.simercandetc.Modelo.Nota;
+import java.time.LocalDate;
+import java.util.List;
 import javax.swing.JTextField;
 
 /**
@@ -15,13 +19,15 @@ public class VistaNotas extends javax.swing.JFrame {
 
     /**
      * Creates new form VistaNotas
-     */
+     */private int posL=0;
+        
     public VistaNotas() {
         initComponents();
         txtDesc.setLineWrap(true);
         txtDesc.setWrapStyleWord(true);
         jtDescripcion.setLineWrap(true);
         jtDescripcion.setWrapStyleWord(true);
+        
     }
 
     /**
@@ -44,9 +50,12 @@ public class VistaNotas extends javax.swing.JFrame {
         btnGuardar = new javax.swing.JButton();
         btnVerGuardados = new javax.swing.JButton();
         idU = new javax.swing.JTextField();
-        txtTitulo = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDesc = new javax.swing.JTextArea();
+        txtTitulo = new javax.swing.JLabel();
+        btnSig = new javax.swing.JButton();
+        btnAtras = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -93,18 +102,41 @@ public class VistaNotas extends javax.swing.JFrame {
         jPanel1.add(btnVerGuardados, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 460, 130, -1));
         jPanel1.add(idU, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 30, -1));
 
-        txtTitulo.setBackground(new java.awt.Color(255, 255, 204));
-        txtTitulo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel1.add(txtTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 110, 260, 40));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 204));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        txtDesc.setBackground(new java.awt.Color(255, 255, 204));
+        txtDesc.setBackground(new java.awt.Color(240, 240, 240));
         txtDesc.setColumns(20);
         txtDesc.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtDesc.setRows(5);
         jScrollPane2.setViewportView(txtDesc);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 160, 260, 180));
+        jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 280, 200));
+
+        txtTitulo.setBackground(new java.awt.Color(255, 255, 204));
+        txtTitulo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel2.add(txtTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 260, 40));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 110, 300, 310));
+
+        btnSig.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnSig.setText("---->");
+        btnSig.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSigActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnSig, new org.netbeans.lib.awtextra.AbsoluteConstraints(990, 430, -1, -1));
+
+        btnAtras.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnAtras.setText("<----");
+        btnAtras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtrasActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAtras, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 430, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -3, 1097, 530));
 
@@ -120,11 +152,72 @@ public class VistaNotas extends javax.swing.JFrame {
         String fecha =((JTextField)jDFecha.getDateEditor().getUiComponent()).getText();
         int id= Integer.parseInt(idU.getText());
         String desc= jtDescripcion.getText();
-        System.out.println(ttl+id+fecha+desc);
+        
         ControladorVistaNota ctrlvN= new ControladorVistaNota();
         ctrlvN.guardar(ttl,desc,fecha,id);
         
+        jtTitulo.setText("");
+        jtDescripcion.setText("");
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnSigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSigActionPerformed
+        posL+=1;
+        txtTitulo.setText("");
+        txtDesc.setText("");
+        
+        int id=Integer.parseInt(idU.getText());
+        String titulo ="";
+        String desc="";
+        NotaDao nDao= new NotaDao();
+        LocalDate fecha = LocalDate.now();
+        
+        String fech = String.valueOf(fecha);
+        List<Nota> lista = nDao.recordatorio(id, fech);
+        for (int i = 0; i < lista.size(); i++) {
+            titulo = lista.get(posL).getTitulo();
+            desc = lista.get(posL).getDescripcion();
+        }
+        int num = lista.size();
+        num-=1;
+        txtTitulo.setText(titulo);
+        txtDesc.setText(desc);
+        
+        btnAtras.setVisible(true);
+        if(posL==num){
+            btnSig.setVisible(false);
+        }else{
+            btnSig.setVisible(true);
+        }
+
+    }//GEN-LAST:event_btnSigActionPerformed
+
+    private void btnAtrasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtrasActionPerformed
+        posL-=1;
+        txtTitulo.setText("");
+        txtDesc.setText("");
+        
+        int id=Integer.parseInt(idU.getText());
+        String titulo ="";
+        String desc="";
+        NotaDao nDao= new NotaDao();
+        LocalDate fecha = LocalDate.now();
+        
+        String fech = String.valueOf(fecha);
+        List<Nota> lista = nDao.recordatorio(id, fech);
+        for (int i = 0; i < lista.size(); i++) {
+            titulo = lista.get(posL).getTitulo();
+            desc = lista.get(posL).getDescripcion();
+        }
+        
+        txtTitulo.setText(titulo);
+        txtDesc.setText(desc);
+        if(posL==0){
+            btnAtras.setVisible(false);
+        }else{
+            btnAtras.setVisible(true);
+        }
+        btnSig.setVisible(true);
+    }//GEN-LAST:event_btnAtrasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,7 +255,9 @@ public class VistaNotas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton btnAtras;
     public javax.swing.JButton btnGuardar;
+    public javax.swing.JButton btnSig;
     public javax.swing.JButton btnVerGuardados;
     public javax.swing.JTextField idU;
     public com.toedter.calendar.JDateChooser jDFecha;
@@ -170,6 +265,7 @@ public class VistaNotas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTextArea jtDescripcion;
