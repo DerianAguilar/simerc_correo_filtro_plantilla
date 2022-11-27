@@ -4,6 +4,8 @@
  */
 package com.mycompany.simercandetc.Vista;
 
+import com.mycompany.simercandetc.Controlador.ControladorVistaNota;
+
 /**
  *
  * @author Admin
@@ -35,6 +37,7 @@ public class VistaEnCorreo extends javax.swing.JFrame {
         txtidFila = new javax.swing.JTextField();
         btnSiguiente = new javax.swing.JButton();
         sTodos = new javax.swing.JCheckBox();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -95,6 +98,17 @@ public class VistaEnCorreo extends javax.swing.JFrame {
         });
         jPanel1.add(sTodos, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 70, 80, -1));
 
+        jButton1.setBackground(new java.awt.Color(0, 0, 153));
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("RECORDATORIO");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 150, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1160, 530));
 
         pack();
@@ -127,6 +141,13 @@ public class VistaEnCorreo extends javax.swing.JFrame {
         System.out.println(id);
         }
     }//GEN-LAST:event_sTodosMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String idU = txtIdU.getText();
+        ControladorVistaNota ctrlvN= new ControladorVistaNota();
+        ctrlvN.mostrar(idU);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,6 +187,7 @@ public class VistaEnCorreo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnBuscar;
     public javax.swing.JButton btnSiguiente;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JTextField jtBuscar;

@@ -61,7 +61,6 @@ public class VistaDesCorreo extends javax.swing.JFrame {
         txtIdU = new javax.swing.JTextField();
         txtFila = new javax.swing.JTextField();
         cmbPrograma = new javax.swing.JComboBox<>();
-        btnPlantillas = new javax.swing.JButton();
         btnRuta = new javax.swing.JButton();
         jtRuta = new javax.swing.JTextField();
         cmbAd = new javax.swing.JComboBox<>();
@@ -127,14 +126,6 @@ public class VistaDesCorreo extends javax.swing.JFrame {
         cmbPrograma.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         cmbPrograma.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PROGRAMA", " ", "INGENIERIA DE SOFTWARE", "DISEÑO GRAFICO", "DISEÑO DE MODAS", "ADMINISTRACION FINANCIERA", "NEGOCIOS INTERNACIONALES", "LOGISTICA EMPRESARIAL", "HOTELERIA Y TURISMO" }));
         jPanel2.add(cmbPrograma, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, 230, 20));
-
-        btnPlantillas.setText("plantillas");
-        btnPlantillas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPlantillasActionPerformed(evt);
-            }
-        });
-        jPanel2.add(btnPlantillas, new org.netbeans.lib.awtextra.AbsoluteConstraints(940, 190, 90, -1));
 
         btnRuta.setText("....");
         btnRuta.addActionListener(new java.awt.event.ActionListener() {
@@ -280,12 +271,6 @@ public class VistaDesCorreo extends javax.swing.JFrame {
         jtRuta.setText("");
     }//GEN-LAST:event_btnEnviarCorreoActionPerformed
 
-    private void btnPlantillasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlantillasActionPerformed
-        ControladorVistaPlantilla ctrlvPlan = new ControladorVistaPlantilla();
-        ctrlvPlan.mostrar();
-        this.dispose();
-    }//GEN-LAST:event_btnPlantillasActionPerformed
-
     private void btnRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRutaActionPerformed
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
@@ -358,7 +343,6 @@ public class VistaDesCorreo extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnCancelar;
     public javax.swing.JButton btnEnviarCorreo;
-    private javax.swing.JButton btnPlantillas;
     public javax.swing.JButton btnRuta;
     private javax.swing.JComboBox<String> cmbAd;
     public javax.swing.JComboBox<String> cmbPrograma;
